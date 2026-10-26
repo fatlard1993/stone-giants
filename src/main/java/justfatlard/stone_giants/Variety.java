@@ -20,8 +20,8 @@ import org.jspecify.annotations.Nullable;
  *
  * <p>Each is an entity type of its own, with its own body, skin and animations from
  * {@code generate_textures.py}, and its own outcrop to sleep as, laid in its own rock with its own
- * ores on its front. The body is modelled at its full size; the scale attribute is what makes its
- * hitbox, and is taken back off the drawing.
+ * ores on its front. The body is modelled at its full size, about as much stone as that outcrop;
+ * the scale attribute makes a hitbox as tall, and is taken back off the drawing.
  */
 public enum Variety {
 	/** The meadows and the wooded hills: old, hunched and grown over, a brawler. */
@@ -33,15 +33,15 @@ public enum Variety {
 		Set.of(Biomes.MEADOW, Biomes.WINDSWEPT_FOREST)),
 
 	/** The windswept hills: lanky, broken and bad tempered, it throws the hillside at you. */
-	CRAGGY("craggy", "crag_giant", "Crag Giant", Outcrop.Shape.CRAG, 2.0F, 0.24, Attack.THROWS_ROCK,
+	CRAGGY("craggy", "crag_giant", "Crag Giant", Outcrop.Shape.CRAG, 2.8F, 0.24, Attack.THROWS_ROCK,
 		new Mix().with(Blocks.ANDESITE, 35).with(Blocks.STONE, 30).with(Blocks.COBBLESTONE, 25).with(Blocks.MOSSY_COBBLESTONE, 10),
 		new Mix().with(Blocks.COBBLESTONE, 45).with(Blocks.ANDESITE, 35).with(Blocks.MOSSY_COBBLESTONE, 20),
 		new Mix().with(Blocks.COAL_ORE, 40).with(Blocks.IRON_ORE, 35).with(Blocks.COPPER_ORE, 15).with(Blocks.EMERALD_ORE, 10),
 		Blocks.ANDESITE, Blocks.GRAVEL,
 		Set.of(Biomes.WINDSWEPT_HILLS, Biomes.WINDSWEPT_GRAVELLY_HILLS)),
 
-	/** The bare peaks: the biggest, a summit on legs, and the ground shakes when it stamps. */
-	PEAK("peak", "peak_giant", "Peak Giant", Outcrop.Shape.TOR, 2.6F, 0.19, Attack.STOMPS,
+	/** The bare peaks: a summit on legs, and the ground shakes when it stamps. */
+	PEAK("peak", "peak_giant", "Peak Giant", Outcrop.Shape.TOR, 3.2F, 0.19, Attack.STOMPS,
 		new Mix().with(Blocks.STONE, 45).with(Blocks.CALCITE, 20).with(Blocks.ANDESITE, 15).with(Blocks.TUFF, 10).with(Blocks.COBBLESTONE, 10),
 		new Mix().with(Blocks.STONE, 50).with(Blocks.CALCITE, 35).with(Blocks.COBBLESTONE, 15),
 		new Mix().with(Blocks.IRON_ORE, 40).with(Blocks.COAL_ORE, 25).with(Blocks.GOLD_ORE, 15).with(Blocks.EMERALD_ORE, 10).with(Blocks.COPPER_ORE, 10),
@@ -49,7 +49,7 @@ public enum Variety {
 		Set.of(Biomes.STONY_PEAKS)),
 
 	/** The stony shores: squat and shelled like a turtle, quick, and it shoves you into the sea. */
-	SHORE("shore", "shore_giant", "Shore Giant", Outcrop.Shape.SHELF, 1.2F, 0.28, Attack.SHOVES,
+	SHORE("shore", "shore_giant", "Shore Giant", Outcrop.Shape.SHELF, 1.3F, 0.28, Attack.SHOVES,
 		new Mix().with(Blocks.STONE, 45).with(Blocks.ANDESITE, 25).with(Blocks.COBBLESTONE, 20).with(Blocks.SMOOTH_STONE, 10),
 		new Mix().with(Blocks.STONE, 50).with(Blocks.SMOOTH_STONE, 30).with(Blocks.MOSSY_COBBLESTONE, 20),
 		new Mix().with(Blocks.COAL_ORE, 45).with(Blocks.COPPER_ORE, 40).with(Blocks.IRON_ORE, 15),
@@ -57,7 +57,7 @@ public enum Variety {
 		Set.of(Biomes.STONY_SHORE)),
 
 	/** The snow on the high peaks: bearded with icicles, and it throws ice that freezes where it hits. */
-	FROST("frost", "frost_giant", "Frost Giant", Outcrop.Shape.DRIFT, 2.4F, 0.2, Attack.THROWS_ICE,
+	FROST("frost", "frost_giant", "Frost Giant", Outcrop.Shape.DRIFT, 3.1F, 0.2, Attack.THROWS_ICE,
 		new Mix().with(Blocks.STONE, 40).with(Blocks.PACKED_ICE, 25).with(Blocks.ANDESITE, 15).with(Blocks.COBBLESTONE, 10).with(Blocks.SNOW_BLOCK, 10),
 		new Mix().with(Blocks.SNOW_BLOCK, 70).with(Blocks.PACKED_ICE, 15).with(Blocks.STONE, 15),
 		new Mix().with(Blocks.IRON_ORE, 45).with(Blocks.COAL_ORE, 40).with(Blocks.EMERALD_ORE, 15),
@@ -87,7 +87,7 @@ public enum Variety {
 		public @Nullable Block thrown() { return this.thrown; }
 	}
 
-	// Health and blow at the size a mossy giant's body is modelled at, and in step with size.
+	// Health and blow at a mossy giant's size: health in step with size, the blow more slowly.
 	private static final double HEALTH_AT_MOSSY = 120.0;
 	private static final double DAMAGE_AT_MOSSY = 14.0;
 	private static final float MOSSY_SCALE = 1.9F;
@@ -139,13 +139,13 @@ public enum Variety {
 	public Block dust() { return this.dust; }
 
 	public double health() { return HEALTH_AT_MOSSY * this.scale / MOSSY_SCALE; }
-	public double damage() { return DAMAGE_AT_MOSSY * this.scale / MOSSY_SCALE; }
+	public double damage() { return DAMAGE_AT_MOSSY * Math.sqrt(this.scale / MOSSY_SCALE); }
 
 	public Identifier typeIdentifier() {
 		return Identifier.fromNamespaceAndPath(Main.MOD_ID, this.typeId);
 	}
 
-	/** One of its animations: {@code walk}, {@code idle}, {@code blow}, {@code rise}, {@code throw}, {@code stomp}. */
+	/** One of its animations: {@code walk}, {@code idle}, {@code blow}, {@code hurt}, {@code rise}, {@code throw}, {@code stomp}. */
 	public String animation(final String name) {
 		return Main.MOD_ID + ":" + this.typeId + "_" + name;
 	}

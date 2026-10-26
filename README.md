@@ -15,19 +15,23 @@ Each kind of country has its own giant: made of its own rock, built its own way,
 | Giant | Sleeps in | Stands | Built | Fights |
 |---|---|---|---|---|
 | **Mossy Giant** | meadows, windswept forests | 5 blocks | hunched and old, a hump of shoulder over a sunken head, long arms and boulder fists, moss for a beard | **brawls**: both fists down on you, and you go up as well as back |
-| **Crag Giant** | windswept hills, windswept gravelly hills | 5½ blocks | lanky and broken, shards standing up off its shoulders and back, a jutting brow | **throws rock**: from six to twenty-four blocks off it tears off a chunk and lobs it at you; nearer, it punches |
-| **Peak Giant** | stony peaks | 7 blocks | a summit on legs: an enormous chest, crags on its shoulders, a peak behind its head, calcite for a brow | **stamps**: get within five blocks and it lifts a knee and brings it down, and everything near is hurt and thrown up and away |
-| **Shore Giant** | stony shores | 3¼ blocks | squat and shelled like a turtle, barnacles on its back, claws, beady eyes under a heavy brow and a turtle's sullen beak | **shoves**: quick, with lighter blows that send you a long way back, often into the sea |
-| **Frost Giant** | frozen peaks, jagged peaks, snowy slopes, groves | 6½ blocks | bulked against the cold, snow on its head and shoulders, an ice crest down its back, a beard of icicles | **throws ice**: lobs chunks of packed ice that freeze and slow what they hit; nearer, it punches |
+| **Crag Giant** | windswept hills, windswept gravelly hills | 7½ blocks | lanky and broken, shards standing up off its shoulders and back, a jutting brow | **throws rock**: from six to twenty-four blocks off it tears off a chunk and lobs it at you; nearer, it punches |
+| **Peak Giant** | stony peaks | 8½ blocks | a summit on legs: an enormous chest, crags on its shoulders, a peak behind its head, calcite for a brow | **stamps**: get within five blocks and it lifts a knee and brings it down, and everything near is hurt and thrown up and away |
+| **Shore Giant** | stony shores | 3½ blocks | squat and shelled like a turtle, barnacles on its back, claws, beady eyes under a heavy brow and a turtle's sullen beak | **shoves**: quick, with lighter blows that send you a long way back, often into the sea |
+| **Frost Giant** | frozen peaks, jagged peaks, snowy slopes, groves | 8½ blocks | bulked against the cold, snow on its head and shoulders, an ice crest down its back, a beard of icicles | **throws ice**: lobs chunks of packed ice that freeze and slow what they hit; nearer, it punches |
+
+Rock does not smother them: one woken in a hillside gets up out of it unhurt.
 
 Every throw and stamp has a wind-up you can see: the arm goes back over its head, or the knee comes up, a good half second before anything lets go.
 
-| | Shore | Mossy | Crag | Frost | Peak | Iron golem, for comparison |
+Each is about as much stone as the outcrop it sleeps as: a peak giant's tor is sixty-four blocks, and so, near enough, is the peak giant.
+
+| | Shore | Mossy | Crag | Peak | Frost | Iron golem, for comparison |
 |---|---|---|---|---|---|---|
-| Health | 76 | 120 | 126 | 152 | 164 | 100 |
-| Blow, on normal | 9 | 14 | 15 | 18 | 19 | 7.5 to 21.5 |
+| Health | 82 | 120 | 177 | 202 | 196 | 100 |
+| Blow, on normal | 11.5 | 14 | 17 | 18 | 18 | 7.5 to 21.5 |
 | Armor | 8 | 8 | 8 | 8 | 8 | 0 |
-| Speed | quick | slow | slow | slow | slowest | slow |
+| Speed | quick | slow | slow | slowest | slow | slow |
 
 A thrown chunk does six tenths of a blow, and a stamp seven tenths, to everything it reaches. None of them can be knocked back, and none takes fall damage.
 
@@ -40,7 +44,7 @@ A sleeping giant is an outcrop of the rock it is made of, with **one ore showing
 | Giant | Its outcrop | Made of | Wears |
 |---|---|---|---|
 | Mossy | a mossy hump, 5 across, 3 deep, 3 high: 27 blocks | stone, cobblestone, andesite; moss on top | coal, iron, copper, now and then gold |
-| Crag | a broken crag with a spire, 5 across, 5 high: 28 blocks | andesite, stone, cobblestone | coal, iron, copper, now and then emerald |
+| Crag | a broken crag with a spire, 5 across, 5 high: 29 blocks | andesite, stone, cobblestone | coal, iron, copper, now and then emerald |
 | Peak | a stepped tor, 7 across, 5 deep, 5 high: 64 blocks | stone, calcite, andesite, tuff | iron, coal, gold, emerald, copper |
 | Shore | a low worn shelf, 5 across, 3 deep, 2 high: 22 blocks | stone, andesite, cobblestone, smooth stone | coal, copper, iron |
 | Frost | a great snow drift, 7 across, 4 deep, 4 high: 72 blocks | stone, packed ice; snow on top | iron, coal, emerald |
@@ -67,13 +71,13 @@ Each giant has a **spawn egg** with the other spawn eggs, which sets it down **a
 
 ## Their Own Bodies
 
-Each giant is its own entity, with its own body, built of the game's own stone at the game's own size, a block's worth of texture to a block of giant, so it looks made of the same rock it slept as. Their faces are drawn the way the game draws its own mobs' faces, a few pixels on the front of the head: the mossy giant's green villager eyes under a mossy brow, over a nose and a moss beard; the crag giant's scowl and ember eyes; the peak giant's deep-set gold eyes under a band of calcite; the shore giant's beady eyes and sullen turtle's beak; the frost giant's ice-blue eyes, white brows and icicle beard.
+Each giant is its own entity, with its own body, built of the game's own stone at the game's own size, a block's worth of texture to a block of giant, so it looks made of the same rock it slept as, and built of enough of it to be about as much rock as its outcrop was. Their faces are drawn the way the game draws its own mobs' faces, a few pixels on the front of the head: the mossy giant's green villager eyes under a mossy brow, over a nose and a moss beard; the crag giant's scowl and ember eyes; the peak giant's deep-set gold eyes under a band of calcite; the shore giant's beady eyes and sullen turtle's beak; the frost giant's ice-blue eyes, white brows and icicle beard.
 
-Each walks its own way, a long stride or a short scuttle, breathes slowly at rest, strikes its own way, and when it wakes it pushes itself up off the ground on its fists and shakes its head.
+Each walks its own way, a long stride or a short scuttle, breathes slowly at rest, strikes its own way, reels back when you land a blow (the shore giant pulls its head into its shell), and when it wakes it pushes itself up off the ground on its fists and shakes its head.
 
 ## Pandorical
 
-Pandorical 15.21 or later is required on the server, and on a player's client to see a giant as a giant; the mod will not load without it on the server.
+Pandorical 15.26 or later is required on the server, and on a player's client to see a giant as a giant; the mod will not load without it on the server.
 
 **Asleep, a giant is real blocks**, so everybody sees the disguise, Pandorical or not. **Awake, without Pandorical client-side**, a player sees it as an iron golem at the giant's size, and it still hits like a giant; thrown rock and ice show as what they are to everybody.
 

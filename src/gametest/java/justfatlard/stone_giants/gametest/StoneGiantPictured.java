@@ -21,9 +21,9 @@ import net.minecraft.world.phys.Vec3;
 /**
  * A giant asleep as an outcrop, the same giant standing, and one rising out of the rock, into
  * {@code build/run/clientGameTest/screenshots/} (and {@code screenshots/} with {@code -Ppictures}):
- * the way to see a change to the body, the skin or the rise; then every variety in a row, up and then
+ * the way to see a change to the body, the skin, the flinch or the rise; then every variety in a row, up and then
  * asleep. Taken as {@code stone-giant-asleep}, {@code stone-giant-front}, {@code stone-giant-quarter},
- * {@code stone-giant-rising}, {@code stone-giant-varieties} and {@code stone-giant-outcrops}.
+ * {@code stone-giant-hurt}, {@code stone-giant-rising}, {@code stone-giant-varieties} and {@code stone-giant-outcrops}.
  */
 public final class StoneGiantPictured implements FabricClientGameTest {
 
@@ -37,6 +37,7 @@ public final class StoneGiantPictured implements FabricClientGameTest {
 			Pictures.stage(context, server, Pictures.MORNING);
 
 			int[] riser = new int[1];
+			int[] front = new int[1];
 			Vec3 centre = server.computeOnServer(s -> {
 				ServerLevel level = s.overworld();
 				BlockPos ground = Pictures.ground(level, connection.getServerPlayer().getBlockX(),
@@ -44,7 +45,7 @@ public final class StoneGiantPictured implements FabricClientGameTest {
 				Pictures.clearAround(level, ground, 12, 10);
 				Vec3 at = Vec3.atBottomCenterOf(ground);
 				asleep(level, ground.west(5));
-				stood(level, Variety.MOSSY, at.add(2, 0, 0));
+				front[0] = stood(level, Variety.MOSSY, at.add(2, 0, 0)).getId();
 				riser[0] = asleep(level, ground.east(14)).getId();
 				return at;
 			});
@@ -61,6 +62,16 @@ public final class StoneGiantPictured implements FabricClientGameTest {
 			Pictures.look(server, centre.add(-5, 4.5, -6.5), centre.add(2, 2.2, 0));
 			Pictures.settle(context, connection);
 			System.out.println("[stone-giants test] picture " + Pictures.shoot(context, connection, "stone-giant-quarter").toAbsolutePath());
+
+			// Hit, and caught mid-flinch, which is over in half a second.
+			server.runOnServer(s -> {
+				ServerLevel level = s.overworld();
+				level.getEntity(front[0]).hurtServer(level, level.damageSources().generic(), 1F);
+			});
+			context.waitTicks(2);
+			Path hurt = context.takeScreenshot(TestScreenshotOptions.of("stone-giant-hurt")
+				.withSize(Pictures.WIDTH, Pictures.HEIGHT).disableCounterPrefix());
+			System.out.println("[stone-giants test] picture " + hurt.toAbsolutePath());
 
 			// Woken, then caught early in its rise, still on its haunches.
 			Pictures.look(server, centre.add(10, 3, -8), centre.add(14, 1.8, 0));

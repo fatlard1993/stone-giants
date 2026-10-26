@@ -6,11 +6,11 @@
 			{
 				"target": "position",
 				"keyframes": [
-					{"time": 0, "value": [0, 2.04, 0], "interpolation": "catmullrom"},
+					{"time": 0, "value": [0, 2.28, 0], "interpolation": "catmullrom"},
 					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"},
-					{"time": 1, "value": [0, 2.04, 0], "interpolation": "catmullrom"},
+					{"time": 1, "value": [0, 2.28, 0], "interpolation": "catmullrom"},
 					{"time": 1.5, "value": [0, 0, 0], "interpolation": "catmullrom"},
-					{"time": 2, "value": [0, 2.04, 0], "interpolation": "catmullrom"}
+					{"time": 2, "value": [0, 2.28, 0], "interpolation": "catmullrom"}
 				]
 			},
 			{
@@ -26,11 +26,11 @@
 			{
 				"target": "position",
 				"keyframes": [
-					{"time": 0, "value": [0, 2.04, 0], "interpolation": "catmullrom"},
+					{"time": 0, "value": [0, 2.28, 0], "interpolation": "catmullrom"},
 					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"},
-					{"time": 1, "value": [0, 2.04, 0], "interpolation": "catmullrom"},
+					{"time": 1, "value": [0, 2.28, 0], "interpolation": "catmullrom"},
 					{"time": 1.5, "value": [0, 0, 0], "interpolation": "catmullrom"},
-					{"time": 2, "value": [0, 2.04, 0], "interpolation": "catmullrom"}
+					{"time": 2, "value": [0, 2.28, 0], "interpolation": "catmullrom"}
 				]
 			}
 		],
@@ -56,11 +56,11 @@
 			{
 				"target": "position",
 				"keyframes": [
-					{"time": 0, "value": [0, 2.04, 0], "interpolation": "catmullrom"},
+					{"time": 0, "value": [0, 2.28, 0], "interpolation": "catmullrom"},
 					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"},
-					{"time": 1, "value": [0, 2.04, 0], "interpolation": "catmullrom"},
+					{"time": 1, "value": [0, 2.28, 0], "interpolation": "catmullrom"},
 					{"time": 1.5, "value": [0, 0, 0], "interpolation": "catmullrom"},
-					{"time": 2, "value": [0, 2.04, 0], "interpolation": "catmullrom"}
+					{"time": 2, "value": [0, 2.28, 0], "interpolation": "catmullrom"}
 				]
 			}
 		],
@@ -86,11 +86,11 @@
 			{
 				"target": "position",
 				"keyframes": [
-					{"time": 0, "value": [0, 2.04, 0], "interpolation": "catmullrom"},
+					{"time": 0, "value": [0, 2.28, 0], "interpolation": "catmullrom"},
 					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"},
-					{"time": 1, "value": [0, 2.04, 0], "interpolation": "catmullrom"},
+					{"time": 1, "value": [0, 2.28, 0], "interpolation": "catmullrom"},
 					{"time": 1.5, "value": [0, 0, 0], "interpolation": "catmullrom"},
-					{"time": 2, "value": [0, 2.04, 0], "interpolation": "catmullrom"}
+					{"time": 2, "value": [0, 2.28, 0], "interpolation": "catmullrom"}
 				]
 			}
 		]

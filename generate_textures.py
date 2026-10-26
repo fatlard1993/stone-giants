@@ -83,6 +83,8 @@ class Variety:
     id: str
     type_id: str
     name: str
+    shape: str   # the outcrop it sleeps as
+    scale: float # its scale attribute: how many iron golems tall it stands
     body: list   # (texture, weight)
     tops: list
 
@@ -91,17 +93,32 @@ def varieties():
     """Each variety's ids and name, and the weights of the blocks its body and its top are laid in."""
     source = (JAVA / "Variety.java").read_text()
     out = []
-    for match in re.finditer(r'^\t[A-Z]+\("(\w+)", "(\w+)", "([^"]+)",.*\n(\t\t.*\n)(\t\t.*\n)', source, re.M):
+    for match in re.finditer(
+            r'^\t[A-Z]+\("(\w+)", "(\w+)", "([^"]+)", Outcrop\.Shape\.(\w+), ([\d.]+)F,.*\n(\t\t.*\n)(\t\t.*\n)',
+            source, re.M):
+        id_, type_id, name, shape, scale = match.groups()[:5]
         mixes = [[(TEXTURE_OF.get(block.lower(), block.lower()), int(weight))
                   for block, weight in re.findall(r"Blocks\.(\w+), (\d+)", line)]
-                 for line in match.groups()[3:]]
-        out.append(Variety(*match.groups()[:3], *mixes))
+                 for line in match.groups()[5:]]
+        out.append(Variety(id_, type_id, name, shape, float(scale), *mixes))
     if not out:
         raise SystemExit("no varieties found in Variety.java")
     return out
 
 
 VARIETIES = varieties()
+
+
+def outcrop_stones(shape):
+    """How many stones the outcrop of this shape in Outcrop.java is laid in."""
+    source = (JAVA / "Outcrop.java").read_text()
+    layers = re.search(rf"\t\t{shape}\(new String\[\]\[\] \{{(.*?)\n\t\t\}}\)", source, re.S).group(1)
+    return sum(row.count("#") + row.count("*") for row in re.findall(r'"([.#*]+)"', layers))
+
+
+# Every giant's type is an iron golem's size, made big by its scale attribute: the hitbox stands
+# this many blocks tall per point of scale, and should stand as tall as the body is built.
+GOLEM_HEIGHT = 2.7
 
 
 # --- The shapes --------------------------------------------------------------------------------
@@ -171,25 +188,30 @@ def rgb(hex_):
 # animation fits all of them.
 BODIES = {
     # Hunched and old: a torso broader than it is deep, a hump of shoulder rising behind a head sunk
-    # low and forward, arms longer than its legs ending in fists like boulders. Moss for eyebrows and
-    # a beard, the villager's nose and the villager's green eyes.
+    # low and forward with boulders grown into it, rocks on its shoulders, arms longer than its legs
+    # ending in fists like boulders. Moss for eyebrows and a beard, the villager's nose and the
+    # villager's green eyes.
     "mossy": Body(
         parts=[
             Part("body", (0, -2, 0), [
-                Cube("torso", (-18, -40, -10), (36, 38, 24)),
+                Cube("torso", (-19, -42, -11), (38, 40, 26)),
                 Cube("hump", (-20, -52, -4), (40, 12, 20)),
+                Cube("boulder", (-12, -58, -2), (14, 6, 14)),
+                Cube("boulder", (2, -57, 0), (12, 5, 12)),
+                Cube("brisket", (-14, -36, -15), (28, 14, 4)),
                 Cube("hips", (-15, -4, -8), (30, 6, 18)),
             ]),
             Part("head", (0, -40, -8), [
-                Cube("head", (-9, -50, -21), (18, 16, 16)),
-                Cube("jaw", (-8, -36, -22), (16, 5, 13)),
-                Cube("nose", (-2, -44, -24), (4, 7, 3)),
+                Cube("head", (-9, -50, -23), (18, 16, 16)),
+                Cube("jaw", (-8, -36, -24), (16, 5, 13)),
+                Cube("nose", (-2, -44, -26), (4, 7, 3)),
             ]),
             *pair("arm", (-22, -46, 0), [
+                Cube("shoulder", (-36, -54, -9), (18, 10, 18)),
                 Cube("arm", (-32, -48, -7), (14, 34, 14)),
-                Cube("fist", (-34, -14, -9), (18, 16, 18)),
+                Cube("fist", (-35, -14, -10), (20, 18, 20)),
             ]),
-            *pair("leg", (-10, -2, 0), [Cube("leg", (-17, -2, -7), (14, 26, 14))]),
+            *pair("leg", (-10, -2, 0), [Cube("leg", (-18, -2, -8), (16, 26, 16))]),
         ],
         faces={
             "head": Face([
@@ -217,192 +239,227 @@ BODIES = {
         },
         pupil=rgb("#3e8948"), leg=26, stride=22, step=1.6, blow="both"),
 
-    # Lanky and broken: a narrow torso on long legs, shards standing up off its shoulders and back,
-    # long arms and knuckly fists. A jutting brow ledge over narrowed amber eyes, scowling, and a
-    # jagged mouth.
+    # Lanky and broken: a narrow torso on long legs, shards standing up off its shoulders and back
+    # and off its elbows, long arms and knuckly fists. A jutting brow ledge over narrowed amber eyes,
+    # scowling, and a jagged mouth.
     "craggy": Body(
         parts=[
-            Part("body", (0, -8, 0), [
-                Cube("torso", (-14, -44, -8), (28, 36, 16)),
-                Cube("hips", (-12, -10, -7), (24, 4, 14)),
-                Cube("shard", (-19, -56, -3), (6, 14, 6)),
-                Cube("shard", (12, -60, -1), (6, 18, 6)),
-                Cube("shard", (-7, -52, 5), (5, 10, 5)),
-                Cube("shard", (3, -55, 4), (5, 13, 5)),
+            Part("body", (0, -20, 0), [
+                Cube("torso", (-20, -72, -12), (40, 48, 24)),
+                Cube("ledge", (-16, -64, -15), (32, 10, 3)),
+                Cube("hips", (-16, -28, -9), (32, 8, 18)),
+                Cube("shard", (-30, -90, -4), (9, 20, 9)),
+                Cube("shard", (20, -96, -2), (9, 26, 9)),
+                Cube("shard", (-10, -86, 6), (7, 16, 7)),
+                Cube("shard", (4, -92, 4), (8, 22, 8)),
+                Cube("shard", (-22, -80, 7), (6, 10, 6)),
             ]),
-            Part("head", (0, -44, -4), [
-                Cube("head", (-8, -58, -12), (16, 14, 14)),
-                Cube("brow", (-9, -55, -14), (18, 2, 3)),
+            Part("head", (0, -72, -8), [
+                Cube("head", (-11, -92, -20), (22, 20, 18)),
+                Cube("brow", (-12, -87, -22), (24, 3, 4)),
             ]),
-            *pair("arm", (-19, -42, 0), [
-                Cube("arm", (-24, -44, -5), (10, 34, 10)),
-                Cube("fist", (-25, -10, -6), (12, 12, 12)),
+            *pair("arm", (-26, -68, 0), [
+                Cube("arm", (-34, -70, -7), (14, 48, 14)),
+                Cube("shard", (-38, -52, -1), (5, 10, 5)),
+                Cube("fist", (-37, -24, -10), (20, 18, 20)),
             ]),
-            *pair("leg", (-8, -8, 0), [Cube("leg", (-13, -8, -5), (9, 32, 10))]),
+            *pair("leg", (-10, -20, 0), [Cube("leg", (-17, -20, -8), (14, 44, 15))]),
         ],
         faces={
             "head": Face([
-                "................",
-                "..S..........S..",
-                "................",
-                "................",
-                "................",
-                "..BB........BB..",
-                "...BBB....BBB...",
-                "...KWPK..KPWK...",
-                "....SS....SS....",
-                "................",
-                ".......SS.......",
-                "................",
-                "..MM.MM..MM.MM..",
-                "...MM.MM.MM.MM..",
+                "......................",
+                "...S..............S...",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "...BBB..........BBB...",
+                "....BBBB......BBBB....",
+                "....KWPK......KPWK....",
+                "....KKKK......KKKK....",
+                ".....SS........SS.....",
+                "......................",
+                "..........SS..........",
+                ".........SSSS.........",
+                "......................",
+                "...MM.MM.MM.MM.MM.MM..",
+                "....MM.MM.MM.MM.MM....",
             ]),
             "brow": Face([
-                "BBBBBBBBBBBBBBBBBB",
-                "SBBSSBBBSSBBBSSBBS",
+                "BBBBBBBBBBBBBBBBBBBBBBBB",
+                "BBBBBBBBBBBBBBBBBBBBBBBB",
+                "SBBSSBBBSSBBBSSBBBSSBBBS",
             ]),
         },
-        pupil=rgb("#d65a1e"), leg=32, stride=28, step=1.4, blow="right"),
+        pupil=rgb("#d65a1e"), leg=44, stride=28, step=1.5, blow="right"),
 
-    # A summit on legs: an enormous chest and shoulders over a belly and thick column legs, crags
-    # standing up off both shoulders and a peak behind its head, which is small for it and set low
-    # in its chest. A band of calcite for a brow, deep-set gold eyes, and a great flat nose.
+    # A summit on legs: an enormous chest and shoulders over a belly and thick column legs on broad
+    # feet, boulders on its shoulders, crags standing up off them, a ridge down its back and a peak
+    # behind its head, which is small for it and set low in its chest. A band of calcite for a brow,
+    # deep-set gold eyes, and a great flat nose.
     "peak": Body(
         parts=[
-            Part("body", (0, -10, 0), [
-                Cube("hips", (-20, -14, -10), (40, 6, 20)),
-                Cube("belly", (-22, -34, -12), (44, 22, 24)),
-                Cube("chest", (-28, -64, -14), (56, 32, 28)),
-                Cube("crag", (-27, -76, -6), (14, 12, 14)),
-                Cube("crag", (13, -74, -6), (14, 10, 14)),
-                Cube("summit", (-8, -88, -2), (16, 24, 14)),
+            Part("body", (0, -14, 0), [
+                Cube("hips", (-22, -18, -11), (44, 6, 22)),
+                Cube("belly", (-25, -40, -13), (50, 24, 26)),
+                Cube("chest", (-32, -74, -17), (64, 36, 34)),
+                Cube("crag", (-31, -88, -7), (16, 14, 16)),
+                Cube("crag", (15, -86, -7), (16, 12, 16)),
+                Cube("ridge", (-20, -84, 6), (12, 10, 12)),
+                Cube("ridge", (8, -82, 8), (10, 8, 10)),
+                Cube("summit", (-9, -104, -3), (18, 30, 16)),
+                Cube("summit", (-5, -114, 1), (10, 10, 10)),
             ]),
-            Part("head", (0, -64, -14), [
-                Cube("head", (-10, -74, -26), (20, 18, 14)),
-                Cube("nose", (-3, -66, -29), (6, 6, 3)),
+            Part("head", (0, -74, -17), [
+                Cube("head", (-11, -86, -31), (22, 20, 16)),
+                Cube("nose", (-3, -77, -34), (6, 7, 3)),
             ]),
-            *pair("arm", (-32, -58, 0), [
-                Cube("arm", (-44, -62, -10), (16, 40, 20)),
-                Cube("fist", (-48, -22, -13), (24, 22, 26)),
+            *pair("arm", (-36, -68, 0), [
+                Cube("shoulder", (-50, -80, -12), (20, 12, 24)),
+                Cube("arm", (-50, -70, -11), (18, 44, 22)),
+                Cube("fist", (-54, -28, -14), (26, 24, 28)),
             ]),
-            *pair("leg", (-12, -10, 0), [Cube("leg", (-20, -10, -9), (16, 34, 18))]),
+            *pair("leg", (-14, -14, 0), [
+                Cube("leg", (-23, -14, -10), (18, 38, 20)),
+                Cube("foot", (-25, 16, -13), (22, 8, 24)),
+            ]),
         ],
         faces={
             "head": Face([
-                "CCCCCCCCCCCCCCCCCCCC",
-                "CCCCCCCCCCCCCCCCCCCC",
-                "....................",
-                "...BBBBBBBBBBBBBB...",
-                "...SSSS......SSSS...",
-                "...KKKK......KKKK...",
-                "...KWPK......KPWK...",
-                "...SSSS......SSSS...",
-                "....................",
-                "....................",
-                "....................",
-                "....................",
-                "....................",
-                "....................",
-                "....................",
-                "......MMMMMMMM......",
-                "....................",
-                ".....SSSSSSSSSS.....",
+                "CCCCCCCCCCCCCCCCCCCCCC",
+                "CCCCCCCCCCCCCCCCCCCCCC",
+                "......................",
+                "...BBBBBBBBBBBBBBBB...",
+                "...SSSS........SSSS...",
+                "...KKKK........KKKK...",
+                "...KWPK........KPWK...",
+                "...SSSS........SSSS...",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "......................",
+                "......MMMMMMMMMM......",
+                "......................",
+                ".....SSSSSSSSSSSS.....",
             ]),
         },
-        pupil=rgb("#e6a028"), leg=34, stride=16, step=2.0, blow="both"),
+        pupil=rgb("#e6a028"), leg=38, stride=16, step=2.0, blow="both"),
 
-    # Squat and shelled, like a turtle hauled up on the shingle: a wide flat body under a shell that
-    # overhangs it, barnacles on the shell, stubby legs splayed wide, short arms ending in claws, and
-    # its head thrust out low in front. Small beady eyes under a heavy brow, and a turtle's sullen beak.
+    # Squat and shelled, like a turtle hauled up on the shingle: a wide flat body under a domed shell
+    # that overhangs it, barnacles on the shell, a stub of a tail, stubby legs splayed wide, short
+    # arms ending in claws, and its head thrust out low in front. Small beady eyes under a heavy
+    # brow, and a turtle's sullen beak.
     "shore": Body(
         parts=[
             Part("body", (0, 10, 0), [
-                Cube("belly", (-20, -12, -14), (40, 22, 30)),
-                Cube("shell", (-23, -18, -16), (46, 6, 34)),
-                Cube("barnacle", (-12, -22, -6), (6, 4, 6)),
-                Cube("barnacle", (6, -21, 2), (5, 3, 5)),
-                Cube("barnacle", (-4, -21, 8), (4, 3, 4)),
+                Cube("belly", (-24, -14, -17), (48, 24, 36)),
+                Cube("shell", (-28, -22, -20), (56, 8, 42)),
+                Cube("dome", (-20, -28, -14), (40, 6, 30)),
+                Cube("barnacle", (-14, -32, -6), (7, 4, 7)),
+                Cube("barnacle", (8, -31, 2), (6, 3, 6)),
+                Cube("barnacle", (-4, -31, 8), (5, 3, 5)),
+                Cube("barnacle", (16, -25, -12), (5, 3, 5)),
+                Cube("tail", (-5, 0, 19), (10, 6, 8)),
             ]),
-            Part("head", (0, -2, -14), [
-                Cube("head", (-9, -10, -26), (18, 14, 12)),
+            Part("head", (0, -4, -17), [
+                Cube("head", (-11, -14, -32), (22, 16, 14)),
             ]),
-            *pair("arm", (-22, -6, -4), [
-                Cube("arm", (-28, -8, -10), (8, 18, 10)),
-                Cube("claw", (-31, 8, -16), (12, 8, 16)),
+            *pair("arm", (-26, -8, -4), [
+                Cube("arm", (-34, -10, -12), (10, 20, 12)),
+                Cube("claw", (-38, 8, -20), (14, 10, 18)),
             ]),
-            *pair("leg", (-11, 10, 0), [Cube("leg", (-16, 10, -6), (10, 14, 12))]),
+            *pair("leg", (-14, 10, 0), [Cube("leg", (-21, 10, -8), (13, 14, 15))]),
         ],
         faces={
             "head": Face([
-                "..................",
-                "..BBBB......BBBB..",
-                "..KPKK......KKPK..",
-                "...KK........KK...",
-                "..................",
-                "..................",
-                ".......K..K.......",
-                "..................",
-                "..SSSSSSSSSSSSSS..",
-                "...MMMMMMMMMMMM...",
-                "..M............M..",
-                "....R.............",
+                "......................",
+                "......................",
+                "...BBBBB......BBBBB...",
+                "....KPK........KPK....",
+                "....KKK........KKK....",
+                "......................",
+                "......................",
+                "......................",
+                "........K....K........",
+                "......................",
+                "...SSSSSSSSSSSSSSSS...",
+                "....MMMMMMMMMMMMMM....",
+                "...M..............M...",
+                "......................",
+                ".....R................",
             ]),
         },
         pupil=rgb("#16424a"), leg=14, stride=30, step=0.8, blow="pinch"),
 
-    # Big and bulked against the cold: a broad torso, snow banked on its back and on its shoulders,
-    # a snow cap on its head, an ice crest down its spine, and a beard of icicles hanging off its
-    # chin. White frost for brows and a moustache, and eyes that glow like ice with light behind it.
+    # Big and bulked against the cold: a broad torso and a paunch, snow banked on its back and on
+    # its shoulders, a snow cap on its head, an ice crest and ice shards down its spine, and a beard
+    # of icicles hanging off its chin. White frost for brows, a moustache and a beard, and eyes that
+    # glow like ice with light behind it.
     "frost": Body(
         parts=[
-            Part("body", (0, -6, 0), [
-                Cube("torso", (-22, -50, -12), (44, 44, 26)),
-                Cube("snowback", (-20, -54, -6), (40, 4, 20), "snow"),
-                Cube("crest", (-4, -62, 4), (8, 12, 8), "packed_ice"),
+            Part("body", (0, -12, 0), [
+                Cube("torso", (-30, -76, -16), (60, 60, 34)),
+                Cube("paunch", (-24, -48, -20), (48, 26, 4)),
+                Cube("hips", (-24, -20, -12), (48, 8, 24)),
+                Cube("snowback", (-28, -82, -10), (56, 6, 26), "snow"),
+                Cube("crest", (-5, -94, 6), (10, 14, 10), "packed_ice"),
+                Cube("crest", (-20, -90, 2), (8, 10, 8), "packed_ice"),
+                Cube("crest", (12, -88, 4), (8, 8, 8), "packed_ice"),
+                Cube("spine", (-4, -72, 18), (8, 14, 5), "packed_ice"),
             ]),
-            Part("head", (0, -50, -6), [
-                Cube("head", (-10, -70, -18), (20, 20, 18)),
-                Cube("cap", (-11, -76, -19), (22, 6, 20), "snow"),
-                Cube("icicle", (-8, -50, -19), (3, 8, 2), "packed_ice"),
-                Cube("icicle", (-3, -50, -19), (3, 11, 2), "packed_ice"),
-                Cube("icicle", (2, -50, -19), (3, 9, 2), "packed_ice"),
-                Cube("icicle", (6, -50, -19), (2, 6, 2), "packed_ice"),
+            Part("head", (0, -76, -10), [
+                Cube("head", (-13, -102, -26), (26, 26, 22)),
+                Cube("cap", (-14, -110, -27), (28, 8, 24), "snow"),
+                Cube("icicle", (-10, -76, -27), (4, 10, 2), "packed_ice"),
+                Cube("icicle", (-5, -76, -27), (4, 14, 2), "packed_ice"),
+                Cube("icicle", (0, -76, -27), (4, 12, 2), "packed_ice"),
+                Cube("icicle", (5, -76, -27), (4, 8, 2), "packed_ice"),
             ]),
-            *pair("arm", (-27, -46, 0), [
-                Cube("pad", (-35, -54, -11), (16, 8, 22), "snow"),
-                Cube("arm", (-33, -48, -8), (12, 38, 16)),
-                Cube("fist", (-35, -10, -10), (16, 14, 20)),
+            *pair("arm", (-36, -72, 0), [
+                Cube("pad", (-50, -84, -15), (24, 10, 30), "snow"),
+                Cube("arm", (-48, -74, -11), (18, 48, 22)),
+                Cube("fist", (-51, -28, -15), (26, 22, 30)),
             ]),
-            *pair("leg", (-10, -6, 0), [Cube("leg", (-17, -6, -8), (14, 30, 16))]),
+            *pair("leg", (-13, -12, 0), [Cube("leg", (-23, -12, -11), (20, 36, 22))]),
         ],
         faces={
             "head": Face([
-                "....................",
-                "....................",
-                "....................",
-                "....................",
-                "...NNNNN....NNNNN...",
-                "....NNNN....NNNN....",
-                "....KEEK....KEEK....",
-                "....KKKK....KKKK....",
-                "....................",
-                ".........SS.........",
-                "........SSSS........",
-                "....................",
-                "....................",
-                ".......MMMMMM.......",
-                "....................",
-                "....N..N..N..N..N...",
-                "...NNNNNNNNNNNNNN...",
-                "....NNNNNNNNNNNN....",
+                "..........................",
+                "..........................",
+                "..........................",
+                "..........................",
+                "..........................",
+                ".....NNNNNN....NNNNNN.....",
+                "......NNNNN....NNNNN......",
+                "......KEEK......KEEK......",
+                "......KKKK......KKKK......",
+                "..........................",
+                "..........................",
+                "............SS............",
+                "...........SSSS...........",
+                "..........................",
+                "..........................",
+                ".........MMMMMMMM.........",
+                "..........................",
+                "....N...N...N...N...N.....",
+                "...NNNNNNNNNNNNNNNNNNNN...",
+                "....NNNNNNNNNNNNNNNNNN....",
+                ".....NNNNNNNNNNNNNNNN.....",
             ]),
         },
-        pupil=rgb("#a8e8ff"), leg=30, stride=20, step=1.8, blow="both"),
+        pupil=rgb("#a8e8ff"), leg=36, stride=20, step=1.9, blow="both"),
 }
 
 # Which cubes the rain falls on: their tops are the variety's tops.
 WEATHERED = {"hump", "head", "arm", "fist", "torso", "shard", "crag", "summit", "shell", "chest",
-             "barnacle", "claw", "brow"}
+             "barnacle", "claw", "brow", "boulder", "shoulder", "ridge", "dome", "tail", "ledge"}
 
 
 # --- The paint ---------------------------------------------------------------------------------
@@ -727,15 +784,46 @@ def stomp(body, seconds):
     }}
 
 
+def hurt(body):
+    """The flinch from a hit, over the half second the game flashes it red: rocked back on its heels
+    with its head snapped back and its arms thrown wide, the less the heavier it stands. The shore
+    giant pulls its head in under its shell instead, and its claws in after it."""
+    t = 0.5
+    if body.blow == "pinch":
+        tucked = channel("position", frame(0, (0, 0, 0)), frame(t * 0.25, (0, 1.5, 5)), frame(t, (0, 0, 0)))
+        def claw(sign):
+            return channel("rotation", frame(0, (0, 0, 0)), frame(t * 0.25, (-25, 0, -20 * sign)), frame(t, (0, 0, 0)))
+        return {"length": t, "looping": False, "bones": {
+            "head": [tucked, channel("rotation", frame(0, (0, 0, 0)), frame(t * 0.25, (12, 0, 0)), frame(t, (0, 0, 0)))],
+            "body": [channel("position", frame(0, (0, 0, 0)), frame(t * 0.25, (0, 1, 0)), frame(t, (0, 0, 0)))],
+            "right_arm": [claw(1)], "left_arm": [claw(-1)],
+        }}
+    give = 28 / body.leg
+    back = channel("position", frame(0, (0, 0, 0)), frame(t * 0.2, (0, 0, 2 * give)), frame(t, (0, 0, 0)))
+    def arm(sign):
+        return channel("rotation", frame(0, (0, 0, 0)), frame(t * 0.2, (-15 * give, 0, 25 * give * sign)), frame(t, (0, 0, 0)))
+    return {"length": t, "looping": False, "bones": {
+        "body": [back, channel("rotation", frame(0, (0, 0, 0)), frame(t * 0.2, (-9 * give, 0, 3 * give)), frame(t, (0, 0, 0)))],
+        "head": [back, channel("rotation", frame(0, (0, 0, 0)), frame(t * 0.2, (-20 * give, 8 * give, 0)), frame(t, (0, 0, 0)))],
+        "right_arm": [back, arm(1)], "left_arm": [back, arm(-1)],
+    }}
+
+
 def animations(body):
     return {
         "walk": walk(body),
         "idle": idle(body),
         "blow": blow(body),
+        "hurt": hurt(body),
         "rise": rise(body, java_constant("RISING_TICKS") / 20),
         "throw": throw(body, java_constant("THROW_WINDUP") / 20),
         "stomp": stomp(body, java_constant("STOMP_WINDUP") / 20),
     }
+
+
+def tall(parts):
+    """How tall a body is built, in model units: the feet are at 24, and up is down."""
+    return max(-c.lo[1] for p in parts for c in p.cubes) + 24
 
 
 def model(variety, parts, sheet):
@@ -763,6 +851,7 @@ def model(variety, parts, sheet):
             "idle": animation("idle"),
             "moving": {"animation": animation("walk"), "pace": 2, "strength": 2.5},
             "attack": animation("blow"),
+            "hurt": animation("hurt"),
         },
         "parts": out,
     }
@@ -861,9 +950,11 @@ def main() -> None:
         for name, built in animations(body).items():
             (ANIMATIONS / f"{variety.type_id}_{name}.json").write_text(compact(built))
         egg(variety).save(EGGS / f"{variety.type_id}_spawn_egg.png")
-        tall = max(-c.lo[1] for p in body.parts for c in p.cubes) + 24
-        print(f"{variety.type_id}: {sum(len(p.cubes) for p in body.parts)} cubes, {tall / 16:.1f} blocks tall,"
-              f" on a {sheet[0]}x{sheet[1]} sheet")
+        # A giant should be about as much stone as the outcrop it slept as, and its hitbox as tall as it.
+        stone = sum(c.size[0] * c.size[1] * c.size[2] for p in body.parts for c in p.cubes) / 16 ** 3
+        print(f"{variety.type_id}: {sum(len(p.cubes) for p in body.parts)} cubes, {tall(body.parts) / 16:.1f} blocks"
+              f" tall in a hitbox of {variety.scale * GOLEM_HEIGHT:.1f}, {stone:.0f} blocks of stone from an outcrop"
+              f" of {outcrop_stones(variety.shape)}, on a {sheet[0]}x{sheet[1]} sheet")
     picture = icon(VARIETIES[0])
     picture.save(ICON)
     picture.save(HERE / "icon.png")

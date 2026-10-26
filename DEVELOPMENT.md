@@ -10,7 +10,7 @@ Compiles against Pandorical's working tree as a subproject.
 
 ## Installing
 
-Server-side. Drop the jar in the server's `mods/` alongside Pandorical 15.21 or later, which is the version that lets a mod add an entity with a body of its own. Players need Pandorical client-side to see an awake giant as a giant; without it they are shown an iron golem at the giant's size.
+Server-side. Drop the jar in the server's `mods/` alongside Pandorical 15.26 or later, which is the version that lets a body of its own flinch when hit. Players need Pandorical client-side to see an awake giant as a giant; without it they are shown an iron golem at the giant's size.
 
 ## How it fits together
 
@@ -29,9 +29,9 @@ Server-side. Drop the jar in the server's `mods/` alongside Pandorical 15.21 or 
 python3 generate_textures.py
 ```
 
-For each giant, writes its body (`pandorical/entity_models/<type>.json`), paints its skin (`textures/entity/<type>.png`) and its spawn egg, and writes its six animations in `animations/` - walk, idle, blow, rise, throw and stomp - all from its own table of boxes in `BODIES`, so a box cannot move on the sheet without its paint moving with it; then paints the icon (both copies). Needs Pillow, and the cached Minecraft jar from one build. Idempotent; it needs no game running.
+For each giant, writes its body (`pandorical/entity_models/<type>.json`), paints its skin (`textures/entity/<type>.png`) and its spawn egg, and writes its seven animations in `animations/` - walk, idle, blow, hurt, rise, throw and stomp - all from its own table of boxes in `BODIES`, so a box cannot move on the sheet without its paint moving with it; then paints the icon (both copies). Needs Pillow, and the cached Minecraft jar from one build. Idempotent; it needs no game running.
 
-Each body is modelled at full size, sixteen units to a block, and registered with a `drawScale` of one over its variety's scale: the scale attribute makes the hitbox, and the draw scale takes it back off the drawing, so the body is drawn at the size it was modelled and its skin is the game's stone at the game's size. Each skin is painted in block-sized tiles of the vanilla textures of the blocks its variety is laid in, by the same weights, read out of `Variety.java`, so a giant and its outcrop cannot be made of different rock; each tile is edged a shade darker.
+Each body is modelled at full size, sixteen units to a block, and registered with a `drawScale` of one over its variety's scale: the scale attribute makes the hitbox, and the draw scale takes it back off the drawing, so the body is drawn at the size it was built and its skin is the game's stone at the game's size. Each body is built of as many boxes as it takes to be about as much stone as the outcrop it sleeps as, and each variety's scale (an iron golem's 2.7 blocks a point of it) is picked so its hitbox stands as tall as its body; the generator prints all four numbers for each giant, so a body that grows or shrinks shows it. Each skin is painted in block-sized tiles of the vanilla textures of the blocks its variety is laid in, by the same weights, read out of `Variety.java`, so a giant and its outcrop cannot be made of different rock; each tile is edged a shade darker.
 
 Every body has the same six top-level parts - `body`, `head`, `right_arm`, `left_arm`, `right_leg`, `left_leg` - with whatever else it has (shards, crags, icicles, a shell) as cubes on them, so one way of writing each animation fits every giant, scaled to its own legs and stride. The parts are not nested, so the animations move the head and arms with the body wherever the body moves.
 

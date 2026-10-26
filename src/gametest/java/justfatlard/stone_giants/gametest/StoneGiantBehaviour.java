@@ -330,6 +330,8 @@ public final class StoneGiantBehaviour implements FabricClientGameTest {
 	/** How a villager beside a giant of this variety is sent flying by one blow. */
 	private static Vec3 struck(ServerLevel level, Variety variety, BlockPos at) {
 		StoneGiant giant = StoneGiants.type(variety).spawn(level, at, EntitySpawnReason.COMMAND);
+		// Facing the villager, east, as a giant does what it hits: the game's own knockback goes the way it faces.
+		giant.setYRot(-90F);
 		Villager villager = EntityTypes.VILLAGER.create(level, EntitySpawnReason.COMMAND);
 		villager.snapTo(at.getX() + 2.5, at.getY(), at.getZ() + 0.5, 90F, 0F);
 		level.addFreshEntity(villager);

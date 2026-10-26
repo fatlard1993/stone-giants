@@ -1,0 +1,78 @@
+{
+	"length": 0.5,
+	"looping": false,
+	"bones": {
+		"body": [
+			{
+				"target": "position",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.1, "value": [0, 0, 1.273], "interpolation": "catmullrom"},
+					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"}
+				]
+			},
+			{
+				"target": "rotation",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.1, "value": [-5.727, 0, 1.909], "interpolation": "catmullrom"},
+					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"}
+				]
+			}
+		],
+		"head": [
+			{
+				"target": "position",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.1, "value": [0, 0, 1.273], "interpolation": "catmullrom"},
+					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"}
+				]
+			},
+			{
+				"target": "rotation",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.1, "value": [-12.727, 5.091, 0], "interpolation": "catmullrom"},
+					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"}
+				]
+			}
+		],
+		"right_arm": [
+			{
+				"target": "position",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.1, "value": [0, 0, 1.273], "interpolation": "catmullrom"},
+					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"}
+				]
+			},
+			{
+				"target": "rotation",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.1, "value": [-9.545, 0, 15.909], "interpolation": "catmullrom"},
+					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"}
+				]
+			}
+		],
+		"left_arm": [
+			{
+				"target": "position",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.1, "value": [0, 0, 1.273], "interpolation": "catmullrom"},
+					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"}
+				]
+			},
+			{
+				"target": "rotation",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.1, "value": [-9.545, 0, -15.909], "interpolation": "catmullrom"},
+					{"time": 0.5, "value": [0, 0, 0], "interpolation": "catmullrom"}
+				]
+			}
+		]
+	}
+}

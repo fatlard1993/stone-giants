@@ -18,6 +18,7 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -435,9 +436,11 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 		return !this.asleep && super.isAttackable();
 	}
 
+	/** Asleep, nothing short of {@code /kill}; awake, rock does not smother it, getting up out of a hillside. */
 	@Override
 	public boolean isInvulnerableTo(final ServerLevel level, final DamageSource source) {
-		return this.asleep && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || super.isInvulnerableTo(level, source);
+		return this.asleep && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || source.is(DamageTypes.IN_WALL)
+			|| super.isInvulnerableTo(level, source);
 	}
 
 	@Override
