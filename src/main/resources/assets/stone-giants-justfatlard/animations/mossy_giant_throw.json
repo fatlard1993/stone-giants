@@ -1,0 +1,37 @@
+{
+	"length": 0.6,
+	"looping": false,
+	"bones": {
+		"right_arm": [
+			{
+				"target": "rotation",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.3, "value": [-160, 0, 10], "interpolation": "catmullrom"},
+					{"time": 0.48, "value": [-205, 0, 10], "interpolation": "catmullrom"},
+					{"time": 0.6, "value": [-70, 0, 0], "interpolation": "catmullrom"}
+				]
+			}
+		],
+		"left_arm": [
+			{
+				"target": "rotation",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.48, "value": [-30, 0, -15], "interpolation": "catmullrom"},
+					{"time": 0.6, "value": [10, 0, 0], "interpolation": "catmullrom"}
+				]
+			}
+		],
+		"body": [
+			{
+				"target": "rotation",
+				"keyframes": [
+					{"time": 0, "value": [0, 0, 0], "interpolation": "catmullrom"},
+					{"time": 0.48, "value": [-10, 25, 0], "interpolation": "catmullrom"},
+					{"time": 0.6, "value": [12, -15, 0], "interpolation": "catmullrom"}
+				]
+			}
+		]
+	}
+}

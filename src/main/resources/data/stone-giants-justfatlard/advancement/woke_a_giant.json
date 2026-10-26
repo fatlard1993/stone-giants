@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:adventure/root",
+  "display": {
+    "icon": {
+      "id": "minecraft:mossy_cobblestone"
+    },
+    "title": "Let Sleeping Stones Lie",
+    "description": "Start mining a rock that turns out to be a stone giant",
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "woke_it": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+	"schemaVersion": 1,
+	"id": "stone-giants-gametest",
+	"version": "1.0.0",
+	"name": "Stone Giants tests",
+	"description": "Loads the mod and joins a world, then lays a sleeping giant on a floor in the sky and holds it to what the readme says.",
+	"license": "MIT",
+	"environment": "*",
+	"entrypoints": {
+		"fabric-client-gametest": [
+			"justfatlard.stone_giants.gametest.SmokeTest",
+			"justfatlard.stone_giants.gametest.StoneGiantBehaviour",
+			"justfatlard.stone_giants.gametest.StoneGiantPictured"
+		]
+	},
+	"depends": {
+		"stone-giants-justfatlard": "*",
+		"fabric-client-gametest-api-v1": "*"
+	}
+}

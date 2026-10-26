@@ -1,0 +1,60 @@
+{
+	"texture": "stone-giants-justfatlard:textures/entity/crag_giant.png",
+	"texture_size": [256, 256],
+	"animation": {
+		"look": "head",
+		"idle": "stone-giants-justfatlard:crag_giant_idle",
+		"moving": {
+			"animation": "stone-giants-justfatlard:crag_giant_walk",
+			"pace": 2,
+			"strength": 2.5
+		},
+		"attack": "stone-giants-justfatlard:crag_giant_blow"
+	},
+	"parts": {
+		"body": {
+			"pivot": [0, -8, 0],
+			"cubes": [
+				{"origin": [-14, -36, -8], "size": [28, 36, 16], "uv": [0, 0]},
+				{"origin": [-12, -2, -7], "size": [24, 4, 14], "uv": [88, 44]},
+				{"origin": [-19, -48, -3], "size": [6, 14, 6], "uv": [226, 24]},
+				{"origin": [12, -52, -1], "size": [6, 18, 6], "uv": [226, 0]},
+				{"origin": [-7, -44, 5], "size": [5, 10, 5], "uv": [234, 44]},
+				{"origin": [3, -47, 4], "size": [5, 13, 5], "uv": [214, 44]}
+			]
+		},
+		"head": {
+			"pivot": [0, -44, -4],
+			"cubes": [
+				{"origin": [-8, -14, -8], "size": [16, 14, 14], "uv": [166, 0]},
+				{"origin": [-9, -11, -10], "size": [18, 2, 3], "uv": [0, 52]}
+			]
+		},
+		"right_arm": {
+			"pivot": [-19, -42, 0],
+			"cubes": [
+				{"origin": [-5, -2, -5], "size": [10, 34, 10], "uv": [88, 0]},
+				{"origin": [-6, 32, -6], "size": [12, 12, 12], "uv": [166, 28]}
+			]
+		},
+		"left_arm": {
+			"pivot": [19, -42, 0],
+			"cubes": [
+				{"origin": [-5, -2, -5], "size": [10, 34, 10], "uv": [88, 0], "mirror": true},
+				{"origin": [-6, 32, -6], "size": [12, 12, 12], "uv": [166, 28], "mirror": true}
+			]
+		},
+		"right_leg": {
+			"pivot": [-8, -8, 0],
+			"cubes": [
+				{"origin": [-5, 0, -5], "size": [9, 32, 10], "uv": [128, 0]}
+			]
+		},
+		"left_leg": {
+			"pivot": [8, -8, 0],
+			"cubes": [
+				{"origin": [-4, 0, -5], "size": [9, 32, 10], "uv": [128, 0], "mirror": true}
+			]
+		}
+	}
+}

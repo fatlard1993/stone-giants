@@ -1,0 +1,60 @@
+{
+	"texture": "stone-giants-justfatlard:textures/entity/peak_giant.png",
+	"texture_size": [256, 256],
+	"animation": {
+		"look": "head",
+		"idle": "stone-giants-justfatlard:peak_giant_idle",
+		"moving": {
+			"animation": "stone-giants-justfatlard:peak_giant_walk",
+			"pace": 2,
+			"strength": 2.5
+		},
+		"attack": "stone-giants-justfatlard:peak_giant_blow"
+	},
+	"parts": {
+		"body": {
+			"pivot": [0, -10, 0],
+			"cubes": [
+				{"origin": [-20, -4, -10], "size": [40, 6, 20], "uv": [0, 154]},
+				{"origin": [-22, -24, -12], "size": [44, 22, 24], "uv": [68, 108]},
+				{"origin": [-28, -54, -14], "size": [56, 32, 28], "uv": [0, 0]},
+				{"origin": [-27, -66, -6], "size": [14, 12, 14], "uv": [120, 154]},
+				{"origin": [13, -64, -6], "size": [14, 10, 14], "uv": [176, 154]},
+				{"origin": [-8, -78, -2], "size": [16, 24, 14], "uv": [168, 60]}
+			]
+		},
+		"head": {
+			"pivot": [0, -64, -14],
+			"cubes": [
+				{"origin": [-10, -10, -12], "size": [20, 18, 14], "uv": [0, 112]},
+				{"origin": [-3, -2, -15], "size": [6, 6, 3], "uv": [228, 60]}
+			]
+		},
+		"right_arm": {
+			"pivot": [-32, -58, 0],
+			"cubes": [
+				{"origin": [-12, -4, -10], "size": [16, 40, 20], "uv": [168, 0]},
+				{"origin": [-16, 36, -13], "size": [24, 22, 26], "uv": [68, 60]}
+			]
+		},
+		"left_arm": {
+			"pivot": [32, -58, 0],
+			"cubes": [
+				{"origin": [-4, -4, -10], "size": [16, 40, 20], "uv": [168, 0], "mirror": true},
+				{"origin": [-8, 36, -13], "size": [24, 22, 26], "uv": [68, 60], "mirror": true}
+			]
+		},
+		"right_leg": {
+			"pivot": [-12, -10, 0],
+			"cubes": [
+				{"origin": [-8, 0, -9], "size": [16, 34, 18], "uv": [0, 60]}
+			]
+		},
+		"left_leg": {
+			"pivot": [12, -10, 0],
+			"cubes": [
+				{"origin": [-8, 0, -9], "size": [16, 34, 18], "uv": [0, 60], "mirror": true}
+			]
+		}
+	}
+}

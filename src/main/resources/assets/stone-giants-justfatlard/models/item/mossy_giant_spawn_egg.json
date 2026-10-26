@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "stone-giants-justfatlard:item/mossy_giant_spawn_egg"
+  }
+}

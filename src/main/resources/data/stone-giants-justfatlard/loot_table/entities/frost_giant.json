@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "modifier": {
+            "type": "minecraft:set_count",
+            "count": {
+              "type": "minecraft:uniform",
+              "max": 12,
+              "min": 6
+            }
+          },
+          "name": "minecraft:cobblestone"
+        }
+      ],
+      "rolls": 1
+    }
+  ],
+  "random_sequence": "stone-giants-justfatlard:entities/frost_giant"
+}

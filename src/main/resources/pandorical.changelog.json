@@ -1,0 +1,18 @@
+{
+	"overview": [
+		"Stone giants asleep in the mountains, passing for outcrops of the rock around them. Start mining one and it stands up."
+	],
+	"versions": {
+		"1.0.0": [
+			"Stone giants sleep in the high country and on the stony shores, as an outcrop of the rock around them with a bit of ore showing on its front.",
+			"Five giants, one for each kind of country, each built its own way and sleeping as its own shape of outcrop: the hunched Mossy Giant in the meadows and windswept forests, the lanky Crag Giant on the windswept hills, the seven-block Peak Giant on the stony peaks, the squat, shelled Shore Giant on the stony shores, and the icicle-bearded Frost Giant on the frozen and jagged peaks, snowy slopes and groves.",
+			"Each fights its own way: the mossy giant brawls, the crag giant throws rock from a distance, the frost giant throws ice that freezes, the peak giant stamps the ground, and the shore giant shoves you a long way back.",
+			"Start mining any of its stones and it wakes: the rock crumbles away, the giant pushes itself up out of it, and it comes for you.",
+			"A sleeping one gives itself away now and then, with a trickle of grit off its back and a low grind.",
+			"Left a minute with nobody to fight and nobody watching, a giant lies down again wherever it is, turns back to stone, and is healed.",
+			"Killed, it drops cobblestone, a few of its own stone, and the ore it was wearing.",
+			"A spawn egg for each giant, with the other spawn eggs, sets it down asleep.",
+			"Without Pandorical on your client, an awake giant looks like a big iron golem. Asleep it looks like rock to everybody."
+		]
+	}
+}

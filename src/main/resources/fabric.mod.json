@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "stone-giants-justfatlard",
+	"version": "${version}",
+	"name": "Stone Giants",
+	"description": "Giants of living stone asleep in the mountains, looking for all the world like an outcrop of rock with a bit of ore showing. Start mining one and it stands up.",
+	"authors": [
+		"justfatlard"
+	],
+	"contact": {
+		"homepage": "https://github.com/fatlard1993/stone-giants",
+		"sources": "https://github.com/fatlard1993/stone-giants",
+		"issues": "https://github.com/fatlard1993/stone-giants/issues"
+	},
+	"license": "MIT",
+	"icon": "assets/stone-giants-justfatlard/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"justfatlard.stone_giants.Main"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=${loaderVersion}",
+		"minecraft": "${minecraftDependency}",
+		"java": ">=25",
+		"pandorical": ">=15.21.0",
+		"fabric-api": "${fabricApiVersion}"
+	}
+}
