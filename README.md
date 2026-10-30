@@ -37,7 +37,7 @@ A thrown chunk does six tenths of a blow, and a stamp seven tenths, to everythin
 
 ## Finding One
 
-About one giant for every ten chunks of the biomes above, where the ground leaves room for one. Each is a one-off: they are laid down with the world and never spawn again.
+About one giant for every fifteen chunks of the biomes above, where the ground leaves room for one. Each is a one-off: they are laid down with the world and never spawn again.
 
 A sleeping giant is an outcrop of the rock it is made of, with **one ore showing low on its front**. That ore is the bait.
 

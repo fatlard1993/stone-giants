@@ -107,6 +107,12 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 
 	private final List<Stone> body = new ArrayList<>();
 	private boolean asleep;
+	/**
+	 * Laid by worldgen and not yet looked over. Features after its own, dirt-slab's terracing
+	 * among them, still reshape the ground it was laid on, and a stone turned to a slab there is no
+	 * miner's doing.
+	 */
+	private boolean fresh;
 	private @Nullable BlockState ore;
 	private int rising;
 	private int idle;
@@ -227,6 +233,7 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 		this.setYHeadRot(facing.toYRot());
 		this.setYBodyRot(facing.toYRot());
 		this.asleep = true;
+		this.fresh = true;
 		this.lieStill();
 	}
 
@@ -286,12 +293,27 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 			}
 			return;
 		}
+		if (this.fresh) {
+			this.adoptWhatWorldgenLeft();
+			return;
+		}
 		if (this.tickCount % STONE_CHECK_INTERVAL == 0 && this.disturbed()) {
 			this.wake(null);
 			return;
 		}
 		if (this.random.nextInt(BREATH_CHANCE) == 0
 				&& level.getNearestPlayer(this, BREATH_HEARD) != null) this.breathe(level);
+	}
+
+	/**
+	 * Takes its stones as the finished world has them. By its first tick every feature near it has
+	 * run, and nobody has had the chance to mine it, so whatever changed was worldgen: a changed
+	 * stone is kept as it now is, and one worldgen cleared away is no longer counted.
+	 */
+	private void adoptWhatWorldgenLeft() {
+		this.body.replaceAll(stone -> new Stone(stone.pos(), this.level().getBlockState(stone.pos())));
+		this.body.removeIf(stone -> stone.state().canBeReplaced());
+		this.fresh = false;
 	}
 
 	/** Any of its stones gone or changed: blown up, pulled by a piston, taken by an enderman. */
@@ -505,6 +527,7 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 	protected void addAdditionalSaveData(final ValueOutput output) {
 		super.addAdditionalSaveData(output);
 		output.putBoolean("Asleep", this.asleep);
+		output.putBoolean("Fresh", this.fresh);
 		output.store("Body", Stone.CODEC.listOf(), this.body);
 		output.storeNullable("Ore", BlockState.CODEC, this.ore);
 	}
@@ -516,6 +539,9 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 		input.read("Body", Stone.CODEC.listOf()).ifPresent(this.body::addAll);
 		this.ore = input.read("Ore", BlockState.CODEC).orElse(null);
 		this.asleep = input.getBooleanOr("Asleep", false);
+		// Missing on giants laid before it was saved, of which those never yet loaded have all of
+		// worldgen's changes still to be taken in.
+		this.fresh = this.asleep && input.getBooleanOr("Fresh", true);
 		// Pose and invisibility are not saved with an entity, so a sleeping one is laid down again.
 		if (this.asleep) this.lieStill();
 	}

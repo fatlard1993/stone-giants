@@ -3,6 +3,10 @@
 		"Stone giants asleep in the mountains, passing for outcrops of the rock around them. Start mining one and it stands up."
 	],
 	"versions": {
+		"1.0.1": [
+			"Giants stay asleep where other worldgen, such as dirt-slab's terracing, reshaped their outcrop, instead of waking on their own and getting stuck in the slabs.",
+			"Rarer: about one for every fifteen chunks of their country, down from ten."
+		],
 		"1.0.0": [
 			"Stone giants sleep in the high country and on the stony shores, as an outcrop of the rock around them with a bit of ore showing on its front.",
 			"Five giants, one for each kind of country, each built its own way and sleeping as its own shape of outcrop: the hunched Mossy Giant in the meadows and windswept forests, the lanky Crag Giant on the windswept hills, the eight-and-a-half-block Peak Giant on the stony peaks, the squat, shelled Shore Giant on the stony shores, and the icicle-bearded Frost Giant on the frozen and jagged peaks, snowy slopes and groves.",
