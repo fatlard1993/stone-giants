@@ -39,21 +39,23 @@ A thrown chunk does six tenths of a blow, and a stamp seven tenths, to everythin
 
 About one giant for every fifteen chunks of the biomes above, where the ground leaves room for one. Each is a one-off: they are laid down with the world and never spawn again.
 
-A sleeping giant is an outcrop of the rock it is made of, with **one ore showing low on its front**. That ore is the bait.
+A sleeping giant is an outcrop of the rock it is made of, with **one ore showing low on its front**, always diamond or emerald. That ore is the bait.
 
 | Giant | Its outcrop | Made of | Wears |
 |---|---|---|---|
-| Mossy | a mossy hump, 5 across, 3 deep, 3 high: 27 blocks | stone, cobblestone, andesite; moss on top | coal, iron, copper, now and then gold |
-| Crag | a broken crag with a spire, 5 across, 5 high: 29 blocks | andesite, stone, cobblestone | coal, iron, copper, now and then emerald |
-| Peak | a stepped tor, 7 across, 5 deep, 5 high: 64 blocks | stone, calcite, andesite, tuff | iron, coal, gold, emerald, copper |
-| Shore | a low worn shelf, 5 across, 3 deep, 2 high: 22 blocks | stone, andesite, cobblestone, smooth stone | coal, copper, iron |
-| Frost | a great snow drift, 7 across, 4 deep, 4 high: 72 blocks | stone, packed ice; snow on top | iron, coal, emerald |
+| Mossy | a mossy hump, 5 across, 3 deep, 3 high: 27 blocks | stone, cobblestone, andesite; moss on top | diamond, now and then emerald |
+| Crag | a broken crag with a spire, 5 across, 5 high: 29 blocks | andesite, stone, cobblestone | emerald, now and then diamond |
+| Peak | a stepped tor, 7 across, 5 deep, 5 high: 64 blocks | stone, calcite, andesite, tuff | emerald, now and then diamond |
+| Shore | a low worn shelf, 5 across, 3 deep, 2 high: 22 blocks | stone, andesite, cobblestone, smooth stone | diamond, now and then emerald |
+| Frost | a great snow drift, 7 across, 4 deep, 4 high: 72 blocks | stone, packed ice; snow on top | emerald, now and then diamond |
 
 **It gives itself away**, if you are patient. Now and then a sleeping giant breathes: a trickle of grit, sand or snow falls off its back and there is a low grind, for anyone within ten blocks to hear. A rock should not do that.
 
 ## Waking One
 
 **The first swing of a tool at any of its stones wakes it.** Not just the ore: any block of it. The stone does not break; the giant gets up. The whole outcrop crumbles away and the giant pushes itself up out of it on its fists, which takes it two seconds. It neither moves nor strikes until it is up, and then it comes for whoever woke it.
+
+**Digging near one can wake it as well.** Break any block within eight blocks of its stones and it may stir: about three times in four right beside it, one in four at four blocks off, hardly ever at six. Woken that way it comes for whoever was digging.
 
 Anything else that takes one of its stones wakes it too: an explosion, a piston, an enderman. Woken that way it has nobody in particular in mind, but it is awake, and will go for any player near.
 
@@ -65,7 +67,7 @@ A giant left **a minute** with nobody to fight, and with **no player within sixt
 
 ## Killing One
 
-It drops **six to twelve cobblestone, the ore block it was wearing, and one to four of its own stone**: mossy cobblestone, andesite, calcite, smooth stone or packed ice. Waking one earns **Let Sleeping Stones Lie**.
+It drops **six to twelve cobblestone, the ore block it was wearing, the diamond or emerald out of it, and one to four of its own stone**: mossy cobblestone, andesite, calcite, smooth stone or packed ice. Waking one earns **Let Sleeping Stones Lie**.
 
 Each giant has a **spawn egg** with the other spawn eggs, which sets it down **asleep**, as an outcrop, where there is room for one. `/summon stone-giants-justfatlard:crag_giant` (or `mossy_giant`, `peak_giant`, `shore_giant`, `frost_giant`) brings one **awake**, and adding `{Asleep:true}` lays one down asleep.
 

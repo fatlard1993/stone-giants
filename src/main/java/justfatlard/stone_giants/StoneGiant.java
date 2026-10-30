@@ -38,7 +38,9 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.golem.AbstractGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -195,6 +197,20 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 		return false;
 	}
 
+	/** How far from its stones digging can be felt. */
+	public static final int FEELS_DIGGING = 8;
+
+	/**
+	 * Whether a block broken at {@code pos} stirs it: likelier the nearer, from about three in four
+	 * against a stone of it to none at all {@link #FEELS_DIGGING} away.
+	 */
+	public boolean stirredBy(final BlockPos pos) {
+		if (!this.asleep || this.body.isEmpty()) return false;
+		double nearest = this.body.stream().mapToDouble(stone -> Math.sqrt(stone.pos().distSqr(pos))).min().orElseThrow();
+		double closeness = Math.max(0.0, 1.0 - nearest / FEELS_DIGGING);
+		return this.random.nextDouble() < closeness * closeness;
+	}
+
 	/** The sleeping giant {@code pos} is a stone of, if any. */
 	public static @Nullable StoneGiant sleepingIn(final ServerLevel level, final BlockPos pos) {
 		List<StoneGiant> giants = level.getEntitiesOfClass(StoneGiant.class, new AABB(pos).inflate(Outcrop.REACH),
@@ -314,6 +330,13 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 		this.body.replaceAll(stone -> new Stone(stone.pos(), this.level().getBlockState(stone.pos())));
 		this.body.removeIf(stone -> stone.state().canBeReplaced());
 		this.fresh = false;
+	}
+
+	// Giants laid before every one wore a gem still owe one, so theirs is a toss-up.
+	private Item gem() {
+		if (this.ore().is(Blocks.EMERALD_ORE)) return Items.EMERALD;
+		if (this.ore().is(Blocks.DIAMOND_ORE)) return Items.DIAMOND;
+		return this.random.nextBoolean() ? Items.EMERALD : Items.DIAMOND;
 	}
 
 	/** Any of its stones gone or changed: blown up, pulled by a piston, taken by an enderman. */
@@ -480,11 +503,12 @@ public class StoneGiant extends AbstractGolem implements Enemy {
 		return true;
 	}
 
-	/** It gives back the ore it wore, and a few of the stone it was most made of. */
+	/** It gives back the ore it wore, the gem out of it, and a few of the stone it was most made of. */
 	@Override
 	protected void dropCustomDeathLoot(final ServerLevel level, final DamageSource source, final boolean killedByPlayer) {
 		super.dropCustomDeathLoot(level, source, killedByPlayer);
 		this.spawnAtLocation(level, new ItemStack(this.ore().getBlock()));
+		this.spawnAtLocation(level, new ItemStack(this.gem()));
 		this.spawnAtLocation(level, new ItemStack(this.variety().keepsake(), 1 + this.random.nextInt(KEEPSAKES)));
 	}
 

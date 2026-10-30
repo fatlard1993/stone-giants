@@ -26,6 +26,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -107,6 +108,16 @@ public final class StoneGiants {
 			wakeAt(player, level, pos) ? InteractionResult.FAIL : InteractionResult.PASS);
 		PlayerBlockBreakEvents.BEFORE.register((level, player, pos, state, blockEntity) ->
 			!wakeAt(player, level, pos));
+		// Digging near one may wake it too, the nearer the likelier.
+		PlayerBlockBreakEvents.AFTER.register((level, player, pos, state, blockEntity) -> stirNear(player, level, pos));
+	}
+
+	private static void stirNear(final Player player, final Level level, final BlockPos pos) {
+		if (!(level instanceof ServerLevel server) || !(player instanceof ServerPlayer miner) || miner.isSpectator()) return;
+		AABB felt = new AABB(pos).inflate(StoneGiant.FEELS_DIGGING + Outcrop.REACH);
+		for (StoneGiant giant : server.getEntitiesOfClass(StoneGiant.class, felt, giant -> giant.stirredBy(pos))) {
+			giant.wake(miner);
+		}
 	}
 
 	/** Wakes the giant sleeping in {@code pos}, if there is one; true if there was. */

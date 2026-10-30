@@ -5,7 +5,9 @@
 	"versions": {
 		"1.0.1": [
 			"Giants stay asleep where other worldgen, such as dirt-slab's terracing, reshaped their outcrop, instead of waking on their own and getting stuck in the slabs.",
-			"Rarer: about one for every fifteen chunks of their country, down from ten."
+			"Rarer: about one for every fifteen chunks of their country, down from ten.",
+			"Every giant wears diamond or emerald on its front, and drops the gem as well as the ore block when it dies.",
+			"Digging near a sleeping giant may wake it: the nearer the block you break, the likelier, out to eight blocks."
 		],
 		"1.0.0": [
 			"Stone giants sleep in the high country and on the stony shores, as an outcrop of the rock around them with a bit of ore showing on its front.",

@@ -28,7 +28,7 @@ public enum Variety {
 	MOSSY("mossy", "mossy_giant", "Mossy Giant", Outcrop.Shape.HUMP, 1.9F, 0.22, Attack.FISTS,
 		new Mix().with(Blocks.STONE, 45).with(Blocks.COBBLESTONE, 25).with(Blocks.ANDESITE, 15).with(Blocks.MOSSY_COBBLESTONE, 15),
 		new Mix().with(Blocks.MOSSY_COBBLESTONE, 45).with(Blocks.MOSS_BLOCK, 25).with(Blocks.STONE, 15).with(Blocks.COBBLESTONE, 15),
-		new Mix().with(Blocks.COAL_ORE, 55).with(Blocks.IRON_ORE, 30).with(Blocks.COPPER_ORE, 10).with(Blocks.GOLD_ORE, 5),
+		new Mix().with(Blocks.DIAMOND_ORE, 60).with(Blocks.EMERALD_ORE, 40),
 		Blocks.MOSSY_COBBLESTONE, Blocks.GRAVEL,
 		Set.of(Biomes.MEADOW, Biomes.WINDSWEPT_FOREST)),
 
@@ -36,7 +36,7 @@ public enum Variety {
 	CRAGGY("craggy", "crag_giant", "Crag Giant", Outcrop.Shape.CRAG, 2.8F, 0.24, Attack.THROWS_ROCK,
 		new Mix().with(Blocks.ANDESITE, 35).with(Blocks.STONE, 30).with(Blocks.COBBLESTONE, 25).with(Blocks.MOSSY_COBBLESTONE, 10),
 		new Mix().with(Blocks.COBBLESTONE, 45).with(Blocks.ANDESITE, 35).with(Blocks.MOSSY_COBBLESTONE, 20),
-		new Mix().with(Blocks.COAL_ORE, 40).with(Blocks.IRON_ORE, 35).with(Blocks.COPPER_ORE, 15).with(Blocks.EMERALD_ORE, 10),
+		new Mix().with(Blocks.EMERALD_ORE, 60).with(Blocks.DIAMOND_ORE, 40),
 		Blocks.ANDESITE, Blocks.GRAVEL,
 		Set.of(Biomes.WINDSWEPT_HILLS, Biomes.WINDSWEPT_GRAVELLY_HILLS)),
 
@@ -44,7 +44,7 @@ public enum Variety {
 	PEAK("peak", "peak_giant", "Peak Giant", Outcrop.Shape.TOR, 3.2F, 0.19, Attack.STOMPS,
 		new Mix().with(Blocks.STONE, 45).with(Blocks.CALCITE, 20).with(Blocks.ANDESITE, 15).with(Blocks.TUFF, 10).with(Blocks.COBBLESTONE, 10),
 		new Mix().with(Blocks.STONE, 50).with(Blocks.CALCITE, 35).with(Blocks.COBBLESTONE, 15),
-		new Mix().with(Blocks.IRON_ORE, 40).with(Blocks.COAL_ORE, 25).with(Blocks.GOLD_ORE, 15).with(Blocks.EMERALD_ORE, 10).with(Blocks.COPPER_ORE, 10),
+		new Mix().with(Blocks.EMERALD_ORE, 60).with(Blocks.DIAMOND_ORE, 40),
 		Blocks.CALCITE, Blocks.CALCITE,
 		Set.of(Biomes.STONY_PEAKS)),
 
@@ -52,7 +52,7 @@ public enum Variety {
 	SHORE("shore", "shore_giant", "Shore Giant", Outcrop.Shape.SHELF, 1.3F, 0.28, Attack.SHOVES,
 		new Mix().with(Blocks.STONE, 45).with(Blocks.ANDESITE, 25).with(Blocks.COBBLESTONE, 20).with(Blocks.SMOOTH_STONE, 10),
 		new Mix().with(Blocks.STONE, 50).with(Blocks.SMOOTH_STONE, 30).with(Blocks.MOSSY_COBBLESTONE, 20),
-		new Mix().with(Blocks.COAL_ORE, 45).with(Blocks.COPPER_ORE, 40).with(Blocks.IRON_ORE, 15),
+		new Mix().with(Blocks.DIAMOND_ORE, 60).with(Blocks.EMERALD_ORE, 40),
 		Blocks.SMOOTH_STONE, Blocks.SAND,
 		Set.of(Biomes.STONY_SHORE)),
 
@@ -60,7 +60,7 @@ public enum Variety {
 	FROST("frost", "frost_giant", "Frost Giant", Outcrop.Shape.DRIFT, 3.1F, 0.2, Attack.THROWS_ICE,
 		new Mix().with(Blocks.STONE, 40).with(Blocks.PACKED_ICE, 25).with(Blocks.ANDESITE, 15).with(Blocks.COBBLESTONE, 10).with(Blocks.SNOW_BLOCK, 10),
 		new Mix().with(Blocks.SNOW_BLOCK, 70).with(Blocks.PACKED_ICE, 15).with(Blocks.STONE, 15),
-		new Mix().with(Blocks.IRON_ORE, 45).with(Blocks.COAL_ORE, 40).with(Blocks.EMERALD_ORE, 15),
+		new Mix().with(Blocks.EMERALD_ORE, 60).with(Blocks.DIAMOND_ORE, 40),
 		Blocks.PACKED_ICE, Blocks.SNOW_BLOCK,
 		Set.of(Biomes.FROZEN_PEAKS, Biomes.JAGGED_PEAKS, Biomes.SNOWY_SLOPES, Biomes.GROVE));
 
