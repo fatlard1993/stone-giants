@@ -1,0 +1,48 @@
+{
+  "demo": {
+    "name": "Stone Giants",
+    "icon": "stone-giants-justfatlard:mossy_giant_spawn_egg",
+    "about": [
+      "Giants of living stone sleep in the mountains looking like an outcrop of rock with a bit of ore showing, and the first swing of a tool at one wakes it.",
+      "Use the egg on open ground to lay a sleeping mossy giant down as a hump of rock, then take the pickaxe to it and bring it down when it stands up."
+    ],
+    "finish": true
+  },
+  "pvp_preset": 1,
+  "needs": ["stone-giants-justfatlard"],
+  "preset": {
+    "name": "Stone Giants",
+    "icon": "stone-giants-justfatlard:mossy_giant_spawn_egg",
+    "pvp": false,
+    "game_mode": "survival",
+    "entry_kit": [
+      {"slot": 0, "item": {"id": "minecraft:diamond_sword", "count": 1, "components": {"minecraft:enchantments": {"minecraft:sharpness": 3}}}},
+      {"slot": 1, "item": {"id": "minecraft:iron_pickaxe", "count": 1}},
+      {"slot": 2, "item": {"id": "stone-giants-justfatlard:mossy_giant_spawn_egg", "count": 2}},
+      {"slot": 3, "item": {"id": "minecraft:golden_apple", "count": 2}},
+      {"slot": 8, "item": {"id": "minecraft:cooked_beef", "count": 16}},
+      {"slot": 40, "item": {"id": "minecraft:shield", "count": 1}},
+      {"slot": 36, "item": {"id": "minecraft:iron_boots", "count": 1}},
+      {"slot": 37, "item": {"id": "minecraft:iron_leggings", "count": 1}},
+      {"slot": 38, "item": {"id": "minecraft:iron_chestplate", "count": 1}},
+      {"slot": 39, "item": {"id": "minecraft:iron_helmet", "count": 1}}
+    ],
+    "respawn_kit": "entry",
+    "goal": "mobs",
+    "mob_goal_kind": "stone-giants-justfatlard:mossy_giant",
+    "mob_goal_count": 1,
+    "lives": "off",
+    "mobs": "always",
+    "mob_rarity": "rare",
+    "mob_default": "off",
+    "mob_levels": {
+      "minecraft:sheep": "rare"
+    },
+    "life": 15,
+    "size": 3,
+    "world": "overworld",
+    "shape": "natural",
+    "biome": "minecraft:meadow",
+    "weather": "clear"
+  }
+}
