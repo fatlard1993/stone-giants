@@ -3,6 +3,9 @@
 		"Stone giants asleep in the mountains, passing for outcrops of the rock around them. Start mining one and it stands up."
 	],
 	"versions": {
+		"1.0.3": [
+			"Describes itself in one short line of what it adds."
+		],
 		"1.0.2": [
 			"A demo to play in PvP Dimensions' onboarding."
 		],
